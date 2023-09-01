@@ -1,3 +1,1 @@
-print("aaa")
 
-print("hi")
