@@ -6,7 +6,7 @@ from sklearn.preprocessing import MinMaxScaler
 import joblib  # 用于加载模型
 import os  # 导入os库用于获取当前文件所在文件夹路径
 from sklearn.preprocessing import LabelEncoder
-
+#不信传不了
 # 获取当前文件所在文件夹的路径
 current_directory = os.path.dirname(os.path.abspath(__file__))
 
