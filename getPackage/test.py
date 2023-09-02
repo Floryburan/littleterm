@@ -1,61 +1,58 @@
-import scapy.all as scapy
-from threading import Thread
+import pandas as pd
+from sklearn.preprocessing import StandardScaler
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.preprocessing import LabelEncoder
+from sklearn.preprocessing import MinMaxScaler 
+import joblib  # 用于加载模型
+import os  # 导入os库用于获取当前文件所在文件夹路径
+from sklearn.preprocessing import LabelEncoder
 
-# 全局变量用于标志是否停止抓包
-stop_sniffing = False
+# 获取当前文件所在文件夹的路径
+current_directory = os.path.dirname(os.path.abspath(__file__))
 
-# 计数器用于统计抓到的总包数、加密包数和非加密包数
-total_packets = 0
-encrypted_packets = 0
-unencrypted_packets = 0
+# 构建模型文件的相对路径
+model_filename = 'model2.0.pkl'
+model_path = os.path.join(current_directory, model_filename)
 
-def start_sniffing(interface):
-    global stop_sniffing
-    global total_packets
-    global encrypted_packets
-    global unencrypted_packets
+test_data = pd.read_csv(r'D:\desktop\test.csv', header=None)
 
-    # 使用多线程运行抓包功能
-    def sniff_packets(interface):
-        global stop_sniffing
-        global total_packets
-        global encrypted_packets
-        global unencrypted_packets
+#预处理数据
+# 创建LabelEncoder对象
+label_encoder = LabelEncoder()
 
-        while not stop_sniffing:
-            try:
-                packet = scapy.sniff(iface=interface, count=1)[0]
-                total_packets += 1
+# 对train_data中的标签进行编码
+test_data[1] = label_encoder.fit_transform(test_data[1])
+test_data[2] = label_encoder.fit_transform(test_data[2])
+test_data[3] = label_encoder.fit_transform(test_data[3])
+test_data[41] = label_encoder.fit_transform(test_data[41])
 
-                # 在这里添加检测加密流量的逻辑
-                # 示例中假设加密流量的判断条件是是否有SSL/TLS协议层
-                if packet.haslayer(scapy.TLS):
 
-                    encrypted_packets += 1
-                else:
-                    unencrypted_packets += 1
+# 划分特征和标签
+X_test = test_data.drop([41], axis=1)
+y_test = test_data[41]
 
-            except Exception as e:
-                pass
 
-    # 启动抓包线程
-    sniff_thread = Thread(target=sniff_packets, args=(interface,))
-    sniff_thread.start()
+# 加载已训练的模型
+clf = joblib.load(model_path)
 
-def stop_sniffing_packets():
-    global stop_sniffing
-    stop_sniffing = True
 
-def main():
-    interface = "WLAN"  # 替换为你的网络接口，例如"eth0"
+# 假设你已经有了一个训练好的模型 clf 和相应的特征提取代码
 
-    start_sniffing(interface)
-    input("按下回车键停止抓包...")
-    stop_sniffing_packets()
+# 创建一个DataFrame来存储现实抓到的数据包的特征
+# 特征列的顺序和格式需要与训练数据集相匹配
+# real_data = pd.DataFrame({
+#     'Feature1': [0,'tcp','private','REJ',0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,229,10,0.00,0.00,1.00,1.00,0.04,0.06,0.00,255,10,0.04,0.06,0.00,0.00,0.00,0.00,1.00,1.00,'neptune',21],  # 依次填充你的特征值
+#     'Feature2': [0,'tcp','private','REJ',0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,136,1,0.00,0.00,1.00,1.00,0.01,0.06,0.00,255,1,0.00,0.06,0.00,0.00,0.00,0.00,1.00,1.00,'neptune',21],
+#     # 添加更多特征列
+# })
 
-    print(f"抓包总数: {total_packets}")
-    print(f"加密流量包数: {encrypted_packets}")
-    print(f"非加密流量包数: {unencrypted_packets}")
 
-if __name__ == "__main__":
-    main()
+
+# 使用模型进行分类预测
+predicted_labels = clf.predict(test_data)
+
+# 打印分类结果
+print("分类结果:")
+for label in predicted_labels:
+    print(label)
+
