@@ -15,7 +15,7 @@ db_config = {
 # 建立数据库连接
 db_connection = mysql.connector.connect(**db_config)
 
-# 创建数据库表格（如果不存在）
+# 创建数据库表格
 def create_table():
     cursor = db_connection.cursor()
     cursor.execute("""
