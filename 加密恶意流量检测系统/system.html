@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>加密恶意流量检测系统</title>
+    <script src="echarts.js"></script>
+</head>
+
+<body>
+    <div class="background">
+        <div class="title">
+            加密恶意流量检测系统
+        </div>
+        <div class="button">
+            <input class="button1" type="button" value="开始抓包" />
+            <input class="button2" type="button" value="停止抓包" />
+            <label for="upload" class="button3" id="uploadButton">上传pcap</label>
+            <input type="file" multiple id="upload" style="display: none;" />
+        </div>
+        <div class="charts">
+            <div id="chart1" style="width: 600px;height:400px;"></div>
+            <script type="text/javascript">
+                // 基于准备好的dom，初始化echarts实例
+                var myChart = echarts.init(document.getElementById('chart1'));
+
+                // 指定图表的配置项和数据
+                var option = {
+                    "title": {
+                        "text": "加密流量与非加密流量统计图",
+                        "textStyle": {
+                            "color": "#fff",
+                            "fontSize": 20
+                        },
+                        "x": "center",
+                        "top": "0%"
+                    },
+                    "grid": {
+                        "top": 200,
+                        "bottom": 150
+                    },
+                    "tooltip": {},
+                    "xAxis": {
+                        "data": ["加密流量", "非加密流量"],
+                        "axisTick": {
+                            "show": false
+                        },
+                        "axisLine": {
+                            "show": false
+                        },
+                        "axisLabel": {
+                            interval: 0,
+                            textStyle: {
+                                color: '#beceff',
+                                fontSize: 20,
+                            },
+                            margin: 80, //刻度标签与轴线之间的距离。
+                        }
+                    },
+                    "yAxis": {
+                        "splitLine": {
+                            "show": false
+                        },
+                        "axisTick": {
+                            "show": false
+                        },
+                        "axisLine": {
+                            "show": false
+                        },
+                        "axisLabel": {
+                            "show": false
+                        }
+                    },
+                    "series": [{
+                        "name": "",
+                        "type": "pictorialBar",
+                        "symbolSize": [100, 45],
+                        "symbolOffset": [0, -20],
+                        "z": 12,
+                        "data": [{
+                            "name": "加密流量",
+                            "value": "981",
+                            "trueVal": "98",
+                            "symbolPosition": "end",
+                            "itemStyle": {
+                                "normal": {
+                                    "color": "#00fff5"  //圆柱顶部颜色
+
+                                }
+                            }
+                        }, {
+                            "name": "非加密流量",
+                            "value": "1000",
+                            "trueVal": "100",
+                            "symbolPosition": "end",
+                            "itemStyle": {
+                                "normal": {
+                                    "color": "#ffcc00" //圆柱顶部颜色
+                                }
+                            }
+                        }]
+                    }, {
+                        "name": "",
+                        "type": "pictorialBar",
+                        "symbolSize": [100, 45],
+                        "symbolOffset": [0, 24],
+                        "z": 12,
+                        "data": [{
+                            "name": "加密流量",
+                            "value": "981",
+                            "trueVal": "98",
+                            "itemStyle": {
+                                "normal": {
+                                    "color": "#43bafe" //圆柱底部颜色
+                                }
+                            }
+                        }, {
+                            "name": "非加密流量",
+                            "value": "1000",
+                            "trueVal": "100",
+                            "itemStyle": {
+                                "normal": {
+                                    "color": "#ff7800" //圆柱底部颜色
+                                }
+                            }
+                        }]
+                    }, {
+                        "name": "",
+                        "type": "pictorialBar",
+                        "symbolSize": [150, 75],
+                        "symbolOffset": [0, 44],
+                        "z": 11,
+                        "data": [{
+                            "name": "加密流量",
+                            "value": "981",
+                            "trueVal": "98",
+                            "itemStyle": {
+                                "normal": {
+                                    "color": "transparent",
+                                    "borderColor": "#43bafe", //底部内圆圈颜色
+                                    "borderWidth": 5
+                                }
+                            }
+                        }, {
+                            "name": "非加密流量",
+                            "value": "1000",
+                            "trueVal": "100",
+                            "itemStyle": {
+                                "normal": {
+                                    "color": "transparent",
+                                    "borderColor": "#ff7800", //底部内圆圈颜色
+                                    "borderWidth": 5
+                                }
+                            }
+                        }]
+                    }, {
+                        "name": "",
+                        "type": "pictorialBar",
+                        "symbolSize": [200, 100],
+                        "symbolOffset": [0, 62],
+                        "z": 10,
+                        "data": [{
+                            "name": "加密流量",
+                            "value": "981",
+                            "trueVal": "98",
+                            "itemStyle": {
+                                "normal": {
+                                    "color": "transparent",
+                                    "borderColor": "#43bafe",  //底部外圆圈颜色
+                                    "borderType": "dashed",
+                                    "borderWidth": 5
+                                }
+                            }
+                        }, {
+                            "name": "非加密流量",
+                            "value": "1000",
+                            "trueVal": "100",
+                            "itemStyle": {
+                                "normal": {
+                                    "color": "transparent",
+                                    "borderColor": "#ff7800", //底部外圆圈颜色
+                                    "borderType": "dashed",
+                                    "borderWidth": 5
+                                }
+                            }
+                        }]
+                    }, {
+
+                        "type": "bar",
+                        "silent": true,
+                        "barWidth": 100,
+                        "barGap": "-100%",
+
+                        "data": [{
+                            "name": "加密流量",
+                            "value": "981",
+                            "trueVal": "98",
+                            "label": {
+                                "normal": {
+                                    "show": true,
+                                    "position": "top",
+                                    "distance": 40,
+                                    "textStyle": {
+                                        "color": "#00fff5", //柱子对应数值颜色
+                                        "fontSize": 40
+                                    }
+                                }
+                            },
+                            "itemStyle": {
+                                "normal": {
+                                    "color": {
+                                        "x": 0,
+                                        "y": 0,
+                                        "x2": 0,
+                                        "y2": 1,
+                                        "type": "linear",
+                                        "global": false,
+                                        "colorStops": [{
+                                            "offset": 0,
+                                            "color": "rgba(0,255,245,0.5)"
+                                        }, {
+                                            "offset": 1,
+                                            "color": "#43bafe" //底部渐变颜色
+                                        }]
+                                    }
+                                }
+                            }
+                        }, {
+                            "name": "非加密流量",
+                            "value": "1000",
+                            "trueVal": "100",
+                            "label": {
+                                "normal": {
+                                    "show": true,
+                                    "position": "top",
+                                    "distance": 40,
+                                    "textStyle": {
+                                        "color": "#ffcc00", //柱子对应数值颜色
+                                        "fontSize": 40
+                                    }
+                                }
+                            },
+                            "itemStyle": {
+                                "normal": {
+                                    "color": {
+                                        "x": 0,
+                                        "y": 0,
+                                        "x2": 0,
+                                        "y2": 1,
+                                        "type": "linear",
+                                        "global": false,
+                                        "colorStops": [{
+                                            "offset": 0,
+                                            "color": "rgba(255,204,0,0.5)"
+                                        }, {
+                                            "offset": 1,
+                                            "color": "#ff7800" //底部渐变颜色
+                                        }]
+                                    }
+                                }
+                            }
+                        }]
+                    }]
+                }
+                // 使用刚指定的配置项和数据显示图表。
+                myChart.setOption(option);
+            </script>
+            <div id="chart2" style="width: 600px;height:400px;"></div>
+            <script type="text/javascript">
+                // 基于准备好的dom，初始化echarts实例
+                var myChart = echarts.init(document.getElementById('chart2'));
+
+                // 指定图表的配置项和数据
+                let data = [
+                    {
+                        name: 'benign',
+                        value: 10
+                    }, {
+                        name: 'dos',
+                        value: 10
+                    }, {
+                        name: 'u2r',
+                        value: 10
+                    }, {
+                        name: 'r2l',
+                        value: 10
+                    }, {
+                        name: 'probe',
+                        value: 10
+                    }
+                ];
+                let color = ['#669fef', '#f3cf2b', '#e6eaf0', '#fe8839', '#5470c6'];
+                let baseData = [];
+                for (let i = 0; i < data.length; i++) {
+                    baseData.push({
+                        value: data[i].value,
+                        name: data[i].name,
+                        itemStyle: {
+                            normal: {
+                                color: color[i],
+                                borderColor: color[i],
+                            }
+                        }
+                    },
+                        {
+                            value: 0,
+                            itemStyle: {
+                                normal: {
+                                    color: 'transparent',
+                                    borderColor: 'transparent',
+
+                                }
+                            }
+                        }
+                    );
+                }
+
+                option = {
+                    title: {
+                        text: '恶意行为分类统计图',
+                        left: 'right',
+                        textStyle: {
+                            color: "#fff",
+                            fontSize: 20
+                        }
+                    },
+                    legend: {
+                        data: ['benign', 'dos', 'u2r', 'r2l', 'probe'],
+                        icon: 'vertical',
+                        right: 0,
+                        top: 'center',
+                        orient: 'vertical',
+                        itemGap: 20,
+                        itemWidth: 20,
+                        itemHeight: 20,
+                        textStyle: {
+                            color: 'white',
+                            fontSize: '20px'
+                        }
+                    },
+
+                    series: [{
+                        type: 'pie',
+                        hoverAnimation: false,
+                        radius: ['55%', '56%'],
+                        center: ['40%', '50%'],
+                        tooltip: {
+                            show: false
+                        },
+                        label: {
+                            normal: {
+                                show: false
+                            }
+                        },
+                        data: baseData
+                    },
+                    {
+                        type: 'pie',
+                        color: color,
+                        radius: ['66%', '81%'],
+                        center: ['40%', '50%'],
+                        tooltip: {
+                            show: false
+                        },
+                        label: {
+                            show: false,
+                            position: 'center'
+                        },
+                        emphasis: {
+                            label: {
+                                show: true,
+                                formatter: '{num|{d}%} \n {name|{b}}',
+                                rich: {
+                                    num: {
+                                        align: 'center',
+                                        fontSize: '30',
+                                        fontWeight: 'bold'
+                                    },
+                                    name: {
+                                        color: '#ffffff',
+                                        fontSize: '20',
+                                    }
+                                }
+                            }
+                        },
+                        data: baseData
+                    },
+
+                    ]
+                };
+                myChart.setOption(option);
+            </script>
+        </div>
+    </div>
+</body>
+
+<style>
+    * {
+        padding: 0;
+        margin: 0;
+    }
+
+    #uploadButton {
+        height: 20px;
+    }
+
+    .background {
+        background-image: url('./images/new.jpg' );
+        background-size: cover;
+        background-repeat: no-repeat; 
+        height: 100%;
+        width: 100%;
+    }
+
+    .title {
+        padding-top: 2%;
+        text-align: center;
+        font-family: 'Times New Roman', Times, serif;
+        font-size: 40px;
+        font-weight: bolder;
+        color: white;
+    }
+
+    .button1 {
+        margin: 5% 5% 5% 23%;
+        border: 0;
+        line-height: 2.5;
+        padding: 0 20px;
+        font-size: 1rem;
+        text-align: center;
+        color: #fff;
+        text-shadow: 1px 1px 1px #000;
+        border-radius: 10px;
+        background-color: rgba(0, 220, 0, 1);
+        background-image: linear-gradient(to top left, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2) 30%, rgba(0, 0, 0, 0));
+        box-shadow:
+            inset 2px 2px 3px rgba(255, 255, 255, 0.6),
+            inset -2px -2px 3px rgba(0, 0, 0, 0.6);
+    }
+
+    .button1:hover {
+        background-color: rgba(0, 255, 0, 1);
+    }
+
+    .button1:active {
+        box-shadow:
+            inset -2px -2px 3px rgba(255, 255, 255, 0.6),
+            inset 2px 2px 3px rgba(0, 0, 0, 0.6);
+    }
+
+    .button2 {
+        margin: 5% 10% 5% 10%;
+        border: 0;
+        line-height: 2.5;
+        padding: 0 20px;
+        font-size: 1rem;
+        text-align: center;
+        color: #fff;
+        text-shadow: 1px 1px 1px #000;
+        border-radius: 10px;
+        background-color: rgba(220, 0, 0, 1);
+        background-image: linear-gradient(to top left, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2) 30%, rgba(0, 0, 0, 0));
+        box-shadow:
+            inset 2px 2px 3px rgba(255, 255, 255, 0.6),
+            inset -2px -2px 3px rgba(0, 0, 0, 0.6);
+    }
+
+    .button2:hover {
+        background-color: rgba(255, 0, 0, 1);
+    }
+
+    .button2:active {
+        box-shadow:
+            inset -2px -2px 3px rgba(255, 255, 255, 0.6),
+            inset 2px 2px 3px rgba(0, 0, 0, 0.6);
+    }
+
+    .button3 {
+        margin: 5% 5% 5% 10%;
+        border: 0;
+        line-height: 2.5;
+        padding: 0 20px;
+        font-size: 1rem;
+        text-align: center;
+        color: #fff;
+        text-shadow: 1px 1px 1px #000;
+        border-radius: 10px;
+        background-color: rgba(0, 220, 220, 1);
+        background-image: linear-gradient(to top left, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2) 30%, rgba(0, 0, 0, 0));
+        box-shadow:
+            inset 2px 2px 3px rgba(255, 255, 255, 0.6),
+            inset -2px -2px 3px rgba(0, 0, 0, 0.6);
+    }
+
+    .button3:hover {
+        background-color: rgba(0, 255, 255, 1);
+    }
+
+    .button3:active {
+        box-shadow:
+            inset -2px -2px 3px rgba(255, 255, 255, 0.6),
+            inset 2px 2px 3px rgba(0, 0, 0, 0.6);
+    }
+
+    .charts {
+        display: flex;
+    }
+</style>
+
+</html>
