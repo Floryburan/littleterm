@@ -12,6 +12,8 @@ logging.basicConfig(level=logging.INFO, format=log_format)
 logger = logging.getLogger(__name__)
 
 # 使用配置文件来管理敏感信息
+#app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:123456@192.168.211.1:3306/sql2'
+
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:123456@localhost/sql2'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
@@ -28,6 +30,7 @@ class ClassificationResult(db.Model):
     user_id = db.Column(db.Integer, nullable=False)
     total_packets = db.Column(db.Integer, nullable=False)
     malicious_packets = db.Column(db.Integer, nullable=False)
+    normal_packets = db.Column(db.Integer, nullable=False) 
     benign = db.Column(db.Integer, nullable=False)
     dos = db.Column(db.Integer, nullable=False)
     u2r = db.Column(db.Integer, nullable=False)
@@ -80,35 +83,23 @@ def login():
     return jsonify({"message": "Invalid credentials"})
 
 # 接收分类结果
-@app.route("/classify", methods=["POST"])
-def classify():
+# http://192.168.211.1:5000//calculate
+@app.route("/calculate", methods=["POST"])
+def calculate():
     data = request.get_json()
-    user_id = data["user_id"]
-    total_packets = data["total_packets"]
     malicious_packets = data["malicious_packets"]
+    normal_packets = data["normal_packets"]
     benign = data["benign"]
     dos = data["dos"]
     u2r = data["u2r"]
     r21 = data["r21"]
     probe = data["probe"]
+    
+    total_packets = malicious_packets + normal_packets
 
-    # 插入分类结果
-    classification_result = ClassificationResult(
-        user_id=user_id,
-        total_packets=total_packets,
-        malicious_packets=malicious_packets,
-        benign=benign,
-        dos=dos,
-        u2r=u2r,
-        r21=r21,
-        probe=probe
-    )
-    db.session.add(classification_result)
-    db.session.commit()
-    logger.info(f"Classification result recorded for user {user_id}")
-
-    # 计算每个分类在恶意流量总数的占比
+   # 计算正常流量的占比和每个分类在恶意流量总数的占比
     percentages = {
+        "normal_percentage": (normal_packets / total_packets) * 100,
         "benign_percentage": (benign / malicious_packets) * 100,
         "dos_percentage": (dos / malicious_packets) * 100,
         "u2r_percentage": (u2r / malicious_packets) * 100,
@@ -116,7 +107,17 @@ def classify():
         "probe_percentage": (probe / malicious_packets) * 100
     }
 
-    return jsonify(percentages)
+    return jsonify({
+        "total_packets": total_packets,
+        "malicious_packets": malicious_packets,
+        "normal_packets": normal_packets,
+        "benign": benign,
+        "dos": dos,
+        "u2r": u2r,
+        "r21": r21,
+        "probe": probe,
+        "percentages": percentages
+    })
 
 if __name__ == "__main__":
     # 创建数据库表格
