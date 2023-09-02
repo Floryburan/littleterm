@@ -7,6 +7,8 @@ import joblib  # 用于加载模型
 import os  # 导入os库用于获取当前文件所在文件夹路径
 from sklearn.preprocessing import LabelEncoder
 from collections import Counter
+import requests
+from collections import Counter
 
 #不信传不了
 # 获取当前文件所在文件夹的路径
@@ -16,7 +18,7 @@ current_directory = os.path.dirname(os.path.abspath(__file__))
 model_filename = 'model2.0.pkl'
 model_path = os.path.join(current_directory, model_filename)
 
-test_data = pd.read_csv(r'D:\desktop\NSL-KDD-Dataset-9d544d0eb9b87d7e2f43ff65733bdb644631d12f\KDDTest+.csv', header=None)
+test_data = pd.read_csv(r'D:\desktop\test.csv', header=None)
 # test_data = pd.read_csv(r'D:\desktop\test.csv', header=None)
 
 #预处理数据
@@ -63,7 +65,7 @@ for label, count in label_counts.items():
     print(f"{label}: 出现次数：{count}")
 
 # 将结果发送到数据库的HTTP接口
-database_url = "http://your-database-url.com/api"
+database_url = "http://192.168.211.1:5000//calculate"
 data_to_send = {
     "results": label_counts
 }
