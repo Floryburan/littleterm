@@ -16,8 +16,10 @@
         <div class="button">
             <input class="button1" type="button" value="开始抓包" />
             <input class="button2" type="button" value="停止抓包" />
-            <label for="upload" class="button3" id="uploadButton">上传pcap</label>
+            <label for="upload" class="button3" id="uploadButton">  上传pcap        </label>
             <input type="file" multiple id="upload" style="display: none;" />
+        </div>
+    
 
             </script>
             <div id="chart2" style="width: 600px;height:400px;"></div>
@@ -163,11 +165,12 @@
                         value:item.value
                     }));
                     // 更新图表数据
-                    option.series[0].data = data;
+                    option.series[0].data = updataedData;
 
                     // 使用setOption方法更新图表
                     myChart.setOption(option);
                 }
+            
             </script>
         </div>
     </div>
@@ -201,16 +204,16 @@
     }
 
     .button1 {
-        margin: 5% 5% 5% 23%;
+        margin: 5% 15% 5% 20%;
         border: 0;
-        line-height: 2.5;
-        padding: 0 20px;
+        line-height: 3;
+        padding: 0 30px;
         font-size: 1rem;
         text-align: center;
         color: #fff;
         text-shadow: 1px 1px 1px #000;
         border-radius: 10px;
-        background-color: rgba(0, 220, 0, 1);
+        background-color: rgb(2, 84, 2);
         background-image: linear-gradient(to top left, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2) 30%, rgba(0, 0, 0, 0));
         box-shadow:
             inset 2px 2px 3px rgba(255, 255, 255, 0.6),
@@ -218,7 +221,7 @@
     }
 
     .button1:hover {
-        background-color: rgba(0, 255, 0, 1);
+        background-color:rgb(76, 148, 4);
     }
 
     .button1:active {
@@ -228,16 +231,16 @@
     }
 
     .button2 {
-        margin: 5% 10% 5% 10%;
+        margin: 6% 15% 7% 2%;
         border: 0;
-        line-height: 2.5;
-        padding: 0 20px;
+        line-height: 3;
+        padding: 0 30px;
         font-size: 1rem;
         text-align: center;
         color: #fff;
         text-shadow: 1px 1px 1px #000;
         border-radius: 10px;
-        background-color: rgba(220, 0, 0, 1);
+        background-color:  rgb(2, 84, 2);
         background-image: linear-gradient(to top left, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2) 30%, rgba(0, 0, 0, 0));
         box-shadow:
             inset 2px 2px 3px rgba(255, 255, 255, 0.6),
@@ -245,7 +248,7 @@
     }
 
     .button2:hover {
-        background-color: rgba(255, 0, 0, 1);
+        background-color: rgb(76, 148, 4);
     }
 
     .button2:active {
@@ -255,24 +258,24 @@
     }
 
     .button3 {
-        margin: 5% 5% 5% 10%;
+        margin: 5% 15% 5% 2%;
         border: 0;
-        line-height: 2.5;
-        padding: 0 20px;
+        line-height: 3;
+        padding:  13px;
         font-size: 1rem;
         text-align: center;
         color: #fff;
         text-shadow: 1px 1px 1px #000;
         border-radius: 10px;
-        background-color: rgba(0, 220, 220, 1);
-        background-image: linear-gradient(to top left, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2) 30%, rgba(0, 0, 0, 0));
+        background-color:  rgb(2, 84, 2);
+         background-image: linear-gradient(to top left, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2) 30%, rgba(0, 0, 0, 0));
         box-shadow:
             inset 2px 2px 3px rgba(255, 255, 255, 0.6),
             inset -2px -2px 3px rgba(0, 0, 0, 0.6);
     }
 
     .button3:hover {
-        background-color: rgba(0, 255, 255, 1);
+        background-color: rgb(76, 148, 4);
     }
 
     .button3:active {
