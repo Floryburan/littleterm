@@ -18,253 +18,7 @@
             <input class="button2" type="button" value="停止抓包" />
             <label for="upload" class="button3" id="uploadButton">上传pcap</label>
             <input type="file" multiple id="upload" style="display: none;" />
-        </div>
-        <div class="charts">
-            <div id="chart1" style="width: 600px;height:400px;"></div>
-            <script type="text/javascript">
-                // 基于准备好的dom，初始化echarts实例
-                var myChart = echarts.init(document.getElementById('chart1'));
 
-                // 指定图表的配置项和数据
-                var option = {
-                    "title": {
-                        "text": "加密流量与非加密流量统计图",
-                        "textStyle": {
-                            "color": "#fff",
-                            "fontSize": 20
-                        },
-                        "x": "center",
-                        "top": "0%"
-                    },
-                    "grid": {
-                        "top": 200,
-                        "bottom": 150
-                    },
-                    "tooltip": {},
-                    "xAxis": {
-                        "data": ["加密流量", "非加密流量"],
-                        "axisTick": {
-                            "show": false
-                        },
-                        "axisLine": {
-                            "show": false
-                        },
-                        "axisLabel": {
-                            interval: 0,
-                            textStyle: {
-                                color: '#beceff',
-                                fontSize: 20,
-                            },
-                            margin: 80, //刻度标签与轴线之间的距离。
-                        }
-                    },
-                    "yAxis": {
-                        "splitLine": {
-                            "show": false
-                        },
-                        "axisTick": {
-                            "show": false
-                        },
-                        "axisLine": {
-                            "show": false
-                        },
-                        "axisLabel": {
-                            "show": false
-                        }
-                    },
-                    "series": [{
-                        "name": "",
-                        "type": "pictorialBar",
-                        "symbolSize": [100, 45],
-                        "symbolOffset": [0, -20],
-                        "z": 12,
-                        "data": [{
-                            "name": "加密流量",
-                            "value": "981",
-                            "trueVal": "98",
-                            "symbolPosition": "end",
-                            "itemStyle": {
-                                "normal": {
-                                    "color": "#00fff5"  //圆柱顶部颜色
-
-                                }
-                            }
-                        }, {
-                            "name": "非加密流量",
-                            "value": "1000",
-                            "trueVal": "100",
-                            "symbolPosition": "end",
-                            "itemStyle": {
-                                "normal": {
-                                    "color": "#ffcc00" //圆柱顶部颜色
-                                }
-                            }
-                        }]
-                    }, {
-                        "name": "",
-                        "type": "pictorialBar",
-                        "symbolSize": [100, 45],
-                        "symbolOffset": [0, 24],
-                        "z": 12,
-                        "data": [{
-                            "name": "加密流量",
-                            "value": "981",
-                            "trueVal": "98",
-                            "itemStyle": {
-                                "normal": {
-                                    "color": "#43bafe" //圆柱底部颜色
-                                }
-                            }
-                        }, {
-                            "name": "非加密流量",
-                            "value": "1000",
-                            "trueVal": "100",
-                            "itemStyle": {
-                                "normal": {
-                                    "color": "#ff7800" //圆柱底部颜色
-                                }
-                            }
-                        }]
-                    }, {
-                        "name": "",
-                        "type": "pictorialBar",
-                        "symbolSize": [150, 75],
-                        "symbolOffset": [0, 44],
-                        "z": 11,
-                        "data": [{
-                            "name": "加密流量",
-                            "value": "981",
-                            "trueVal": "98",
-                            "itemStyle": {
-                                "normal": {
-                                    "color": "transparent",
-                                    "borderColor": "#43bafe", //底部内圆圈颜色
-                                    "borderWidth": 5
-                                }
-                            }
-                        }, {
-                            "name": "非加密流量",
-                            "value": "1000",
-                            "trueVal": "100",
-                            "itemStyle": {
-                                "normal": {
-                                    "color": "transparent",
-                                    "borderColor": "#ff7800", //底部内圆圈颜色
-                                    "borderWidth": 5
-                                }
-                            }
-                        }]
-                    }, {
-                        "name": "",
-                        "type": "pictorialBar",
-                        "symbolSize": [200, 100],
-                        "symbolOffset": [0, 62],
-                        "z": 10,
-                        "data": [{
-                            "name": "加密流量",
-                            "value": "981",
-                            "trueVal": "98",
-                            "itemStyle": {
-                                "normal": {
-                                    "color": "transparent",
-                                    "borderColor": "#43bafe",  //底部外圆圈颜色
-                                    "borderType": "dashed",
-                                    "borderWidth": 5
-                                }
-                            }
-                        }, {
-                            "name": "非加密流量",
-                            "value": "1000",
-                            "trueVal": "100",
-                            "itemStyle": {
-                                "normal": {
-                                    "color": "transparent",
-                                    "borderColor": "#ff7800", //底部外圆圈颜色
-                                    "borderType": "dashed",
-                                    "borderWidth": 5
-                                }
-                            }
-                        }]
-                    }, {
-
-                        "type": "bar",
-                        "silent": true,
-                        "barWidth": 100,
-                        "barGap": "-100%",
-
-                        "data": [{
-                            "name": "加密流量",
-                            "value": "981",
-                            "trueVal": "98",
-                            "label": {
-                                "normal": {
-                                    "show": true,
-                                    "position": "top",
-                                    "distance": 40,
-                                    "textStyle": {
-                                        "color": "#00fff5", //柱子对应数值颜色
-                                        "fontSize": 40
-                                    }
-                                }
-                            },
-                            "itemStyle": {
-                                "normal": {
-                                    "color": {
-                                        "x": 0,
-                                        "y": 0,
-                                        "x2": 0,
-                                        "y2": 1,
-                                        "type": "linear",
-                                        "global": false,
-                                        "colorStops": [{
-                                            "offset": 0,
-                                            "color": "rgba(0,255,245,0.5)"
-                                        }, {
-                                            "offset": 1,
-                                            "color": "#43bafe" //底部渐变颜色
-                                        }]
-                                    }
-                                }
-                            }
-                        }, {
-                            "name": "非加密流量",
-                            "value": "1000",
-                            "trueVal": "100",
-                            "label": {
-                                "normal": {
-                                    "show": true,
-                                    "position": "top",
-                                    "distance": 40,
-                                    "textStyle": {
-                                        "color": "#ffcc00", //柱子对应数值颜色
-                                        "fontSize": 40
-                                    }
-                                }
-                            },
-                            "itemStyle": {
-                                "normal": {
-                                    "color": {
-                                        "x": 0,
-                                        "y": 0,
-                                        "x2": 0,
-                                        "y2": 1,
-                                        "type": "linear",
-                                        "global": false,
-                                        "colorStops": [{
-                                            "offset": 0,
-                                            "color": "rgba(255,204,0,0.5)"
-                                        }, {
-                                            "offset": 1,
-                                            "color": "#ff7800" //底部渐变颜色
-                                        }]
-                                    }
-                                }
-                            }
-                        }]
-                    }]
-                }
-                // 使用刚指定的配置项和数据显示图表。
-                myChart.setOption(option);
             </script>
             <div id="chart2" style="width: 600px;height:400px;"></div>
             <script type="text/javascript">
@@ -290,6 +44,8 @@
                         value: 10
                     }
                 ];
+                
+
                 let color = ['#669fef', '#f3cf2b', '#e6eaf0', '#fe8839', '#5470c6'];
                 let baseData = [];
                 for (let i = 0; i < data.length; i++) {
@@ -389,7 +145,29 @@
 
                     ]
                 };
-                myChart.setOption(option);
+                 // 使用Ajax请求获取后端数据
+                 fetch('/label_counts')
+                    .then(response => response.json())
+                    .then(dataFromBackend => {
+                        // 数据获取成功后的回调函数
+                        // 在这里更新图表数据
+                        updatePieChart(dataFromBackend);
+                    });
+
+                // 定义一个函数来更新饼状图
+                function updatePieChart(dataFromBackend) {
+                    console.log("这是一个日志记录 Data from backend:",dataFromBackend)
+                    
+                    let updataedData=dataFromBackend.map(item=>({
+                        name:item.name,
+                        value:item.value
+                    }));
+                    // 更新图表数据
+                    option.series[0].data = data;
+
+                    // 使用setOption方法更新图表
+                    myChart.setOption(option);
+                }
             </script>
         </div>
     </div>

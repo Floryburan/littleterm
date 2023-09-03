@@ -9,6 +9,12 @@ from sklearn.preprocessing import LabelEncoder
 from collections import Counter
 import requests
 from collections import Counter
+from flask import Flask, jsonify
+from flask_cors import CORS
+
+app = Flask(__name__)
+CORS(app)  # 初始化CORS扩展，允许所有来源访问，默认情况下
+
 
 #不信传不了
 # 获取当前文件所在文件夹的路径
@@ -64,9 +70,27 @@ print("标签计数结果:")
 for label, count in label_counts.items():
     print(f"{label}: 出现次数：{count}")
 
-# 将label_counts结果转为字典，并返回给前端
-label_counts_dict = dict(label_counts)
-return jsonify(label_counts_dict)
+from flask import Flask, jsonify
+
+app = Flask(__name__)
+
+# 在这里定义你的标签计数数据
+label_counts = {
+    'benign': 10,
+    'dos': 10,
+    'u2r': 10,
+    'r2l': 10,
+    'probe': 10
+}
+
+@app.route('/http://localhost:8080/label_counts', methods=['GET'])
+def get_label_counts():
+    # 返回标签计数数据
+    return jsonify(label_counts)
+
+if __name__ == '__main__':
+    app.run(debug=True)
+
 
 # # 将结果发送到数据库的HTTP接口
 # database_url = "http://192.168.211.1:5000//calculate"
