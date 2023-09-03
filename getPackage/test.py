@@ -15,10 +15,10 @@ from collections import Counter
 current_directory = os.path.dirname(os.path.abspath(__file__))
 
 # 构建模型文件的相对路径
-model_filename = 'model2.0.pkl'
+model_filename = 'model3.0.pkl'
 model_path = os.path.join(current_directory, model_filename)
 
-test_data = pd.read_csv(r'D:\desktop\test.csv', header=None)
+test_data = pd.read_csv(r'D:\desktop\NSL-KDD-Dataset-9d544d0eb9b87d7e2f43ff65733bdb644631d12f\KDDTrain+.csv', header=None)
 # test_data = pd.read_csv(r'D:\desktop\test.csv', header=None)
 
 #预处理数据
@@ -29,12 +29,12 @@ label_encoder = LabelEncoder()
 test_data[1] = label_encoder.fit_transform(test_data[1])
 test_data[2] = label_encoder.fit_transform(test_data[2])
 test_data[3] = label_encoder.fit_transform(test_data[3])
-test_data[41] = label_encoder.fit_transform(test_data[41])
+# test_data[41] = label_encoder.fit_transform(test_data[41])
 
 
-# 划分特征和标签
-X_test = test_data.drop([41], axis=1)
-y_test = test_data[41]
+# # 划分特征和标签
+# X_test = test_data.drop([41], axis=1)
+# y_test = test_data[41]
 
 
 # 加载已训练的模型
@@ -64,16 +64,20 @@ print("标签计数结果:")
 for label, count in label_counts.items():
     print(f"{label}: 出现次数：{count}")
 
-# 将结果发送到数据库的HTTP接口
-database_url = "http://192.168.211.1:5000//calculate"
-data_to_send = {
-    "results": label_counts
-}
+# 将label_counts结果转为字典，并返回给前端
+label_counts_dict = dict(label_counts)
+return jsonify(label_counts_dict)
 
-response = requests.post(database_url, json=data_to_send)
+# # 将结果发送到数据库的HTTP接口
+# database_url = "http://192.168.211.1:5000//calculate"
+# data_to_send = {
+#     "results": label_counts
+# }
 
-# 检查HTTP请求是否成功
-if response.status_code == 200:
-    print("结果已成功存储到数据库")
-else:
-    print("存储到数据库时出现错误")
+# response = requests.post(database_url, json=data_to_send)
+
+# # 检查HTTP请求是否成功
+# if response.status_code == 200:
+#     print("结果已成功存储到数据库")
+# else:
+#     print("存储到数据库时出现错误")
