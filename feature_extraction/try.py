@@ -68,7 +68,7 @@ df = pd.read_csv("C:/Users/yxy/littleterm/feature_extraction/trans_csv/user_pack
 # 删去无用特征
 df=df.iloc[:, 4:] #删除前4列
 
-df=df.drop(['Timestamp'],axis=1) # 删去时间戳
+df=df.drop(['Timestamp','Label'],axis=1) # 删去时间戳
 
 #保存最终可用的csv文件
 outputpath = 'C:/Users/yxy/littleterm/feature_extraction/data_new.csv'
