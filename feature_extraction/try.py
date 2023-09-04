@@ -21,6 +21,7 @@ def replace_(word):
     word2 = word.replace('\\','/')
     return str(word2)
 
+
 # 抓包持续时间（秒） 默认5s
 capture_duration = 5
 
