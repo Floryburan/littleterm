@@ -36,6 +36,7 @@ word = os.popen("cd").readline()
 path = os.path.dirname(word)
 path = replace_(path)
 
+
 # 抓包回调函数
 def packet_callback(packet):
     if packet.haslayer(scapy.TCP):
