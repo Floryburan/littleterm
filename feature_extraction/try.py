@@ -34,7 +34,10 @@ captured_packets = []
 
 # 获取这台电脑上的littleterm文件夹的目录
 word = os.popen("cd").readline()
-path = os.path.dirname(word)
+word = word.strip()
+path = word
+# 假设你是vscode，注释掉下面这句话，如果是pycharm，不要动
+path = os.path.dirname(path)
 path = replace_(path)
 
 
