@@ -54,7 +54,7 @@ print(f"总共抓取了 {len(captured_packets)} 个数据包")
 print(f"抓包持续时间: {capture_duration} 秒")
 
 # 提取特征
-str1 = r"D:\Users\yxy\Microsoft Edge\cicflowmeter-4\CICFlowMeter-4.0\bin" #脚本目录
+str1 = r"C:\Users\yxy\littleterm\CICFlowMeter-4.0\bin"  #脚本目录
 str2 = r"C:\Users\yxy\littleterm\feature_extraction\user_packet.pcap" #固定存包
 str3 = r"C:\Users\yxy\littleterm\feature_extraction\trans_csv"  #特征csv存入目录
 get_csv(str1,str2,str3)
